@@ -1,0 +1,321 @@
+{
+  "servers": {
+    "sap-s4-product-srv": {
+      "mcp_server_name": "sap.s4/API_PRODUCT_SRV",
+      "description": "Exposes SAP S/4HANA Product Master OData API operations as MCP tools for querying product name, description, and category",
+      "tools": {
+        "get_metadata_api_product_srv": {
+          "description": "Get metadata of the OData service with optional filtering to reduce token consumption.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "entitySetName": {
+                "type": "string",
+                "description": "Filter metadata by entity set name"
+              }
+            },
+            "required": []
+          },
+          "mock_response": "<?xml version=\"1.0\" encoding=\"utf-8\"?><edmx:Edmx Version=\"1.0\" xmlns:edmx=\"http://schemas.microsoft.com/ado/2007/06/edmx\"><edmx:DataServices m:DataServiceVersion=\"2.0\"><Schema Namespace=\"API_PRODUCT_SRV\"><EntityType Name=\"A_Product\"><Key><PropertyRef Name=\"Product\"/></Key><Property Name=\"Product\" Type=\"Edm.String\"/><Property Name=\"ProductGroup\" Type=\"Edm.String\"/><Property Name=\"Division\" Type=\"Edm.String\"/></EntityType><EntityType Name=\"A_ProductDescription\"><Key><PropertyRef Name=\"Product\"/><PropertyRef Name=\"Language\"/></Key><Property Name=\"Product\" Type=\"Edm.String\"/><Property Name=\"Language\" Type=\"Edm.String\"/><Property Name=\"ProductDescription\" Type=\"Edm.String\"/></EntityType></Schema></edmx:DataServices></edmx:Edmx>"
+        },
+        "batch_for_api_product_srv": {
+          "description": "Execute multiple OData operations in a single batch request.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "requests": {
+                "type": "array",
+                "description": "Array of OData requests to batch"
+              }
+            },
+            "required": []
+          },
+          "mock_response": {
+            "responses": []
+          }
+        },
+        "list_a_product_for_api_product_srv": {
+          "description": "Retrieve a list of entities from the A_Product collection in the api_product_srv service.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "$top": {
+                "type": "string",
+                "description": "Maximum number of records to return"
+              },
+              "$skip": {
+                "type": "string",
+                "description": "Number of records to skip"
+              },
+              "$filter": {
+                "type": "string",
+                "description": "OData filter expression"
+              },
+              "$select": {
+                "type": "string",
+                "description": "Comma-separated list of fields to return"
+              },
+              "$orderby": {
+                "type": "string",
+                "description": "Field(s) to sort by"
+              },
+              "$expand": {
+                "type": "string",
+                "description": "Related entities to expand"
+              }
+            },
+            "required": []
+          },
+          "mock_response": {
+            "d": {
+              "results": [
+                {
+                  "Product": "LAPTOP-001",
+                  "ProductGroup": "ELECTRONICS",
+                  "Division": "01",
+                  "CrossPlantStatus": "20",
+                  "CrossPlantStatusValidityDate": "/Date(1704067200000)/",
+                  "CreationDate": "/Date(1609459200000)/",
+                  "ProductType": "FERT",
+                  "BaseUnit": "EA",
+                  "WeightUnit": "KG",
+                  "GrossWeight": "2.500",
+                  "NetWeight": "2.100"
+                },
+                {
+                  "Product": "MONITOR-002",
+                  "ProductGroup": "ELECTRONICS",
+                  "Division": "01",
+                  "CrossPlantStatus": "20",
+                  "CrossPlantStatusValidityDate": "/Date(1704067200000)/",
+                  "CreationDate": "/Date(1609459200000)/",
+                  "ProductType": "FERT",
+                  "BaseUnit": "EA",
+                  "WeightUnit": "KG",
+                  "GrossWeight": "4.200",
+                  "NetWeight": "3.800"
+                }
+              ]
+            }
+          }
+        },
+        "get_a_product_for_api_product_srv": {
+          "description": "Retrieve a single entity by its key from the A_Product collection.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "Product": {
+                "type": "string",
+                "description": "Product identifier (material number)"
+              },
+              "$select": {
+                "type": "string",
+                "description": "Comma-separated list of fields to return"
+              },
+              "$expand": {
+                "type": "string",
+                "description": "Related entities to expand"
+              }
+            },
+            "required": ["Product"]
+          },
+          "mock_response": {
+            "d": {
+              "Product": "LAPTOP-001",
+              "ProductGroup": "ELECTRONICS",
+              "Division": "01",
+              "CrossPlantStatus": "20",
+              "ProductType": "FERT",
+              "BaseUnit": "EA",
+              "WeightUnit": "KG",
+              "GrossWeight": "2.500",
+              "NetWeight": "2.100"
+            }
+          }
+        },
+        "count_a_product_for_api_product_srv": {
+          "description": "Get the total count of entities in the A_Product collection.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "$filter": {
+                "type": "string",
+                "description": "OData filter expression"
+              }
+            },
+            "required": []
+          },
+          "mock_response": 42
+        },
+        "list_a_productdescription_for_api_product_srv": {
+          "description": "Retrieve a list of entities from the A_ProductDescription collection.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "$top": {
+                "type": "string",
+                "description": "Maximum number of records to return"
+              },
+              "$filter": {
+                "type": "string",
+                "description": "OData filter expression"
+              },
+              "$select": {
+                "type": "string",
+                "description": "Comma-separated list of fields to return"
+              }
+            },
+            "required": []
+          },
+          "mock_response": {
+            "d": {
+              "results": [
+                {
+                  "Product": "LAPTOP-001",
+                  "Language": "EN",
+                  "ProductDescription": "Business Laptop 15-inch with Intel Core i7 processor, 16GB RAM, 512GB SSD"
+                },
+                {
+                  "Product": "MONITOR-002",
+                  "Language": "EN",
+                  "ProductDescription": "27-inch 4K UHD Monitor with USB-C connectivity and HDR support"
+                }
+              ]
+            }
+          }
+        },
+        "get_a_productdescription_for_api_product_srv": {
+          "description": "Retrieve a single entity by its key from the A_ProductDescription collection.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "Product": {
+                "type": "string",
+                "description": "Product identifier"
+              },
+              "Language": {
+                "type": "string",
+                "description": "Language key (e.g., EN, DE)"
+              },
+              "$select": {
+                "type": "string",
+                "description": "Comma-separated list of fields to return"
+              }
+            },
+            "required": ["Product", "Language"]
+          },
+          "mock_response": {
+            "d": {
+              "Product": "LAPTOP-001",
+              "Language": "EN",
+              "ProductDescription": "Business Laptop 15-inch with Intel Core i7 processor, 16GB RAM, 512GB SSD"
+            }
+          }
+        },
+        "count_a_productdescription_for_api_product_srv": {
+          "description": "Get the total count of entities in the A_ProductDescription collection.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "$filter": {
+                "type": "string",
+                "description": "OData filter expression"
+              }
+            },
+            "required": []
+          },
+          "mock_response": 42
+        },
+        "list_a_productbasictext_for_api_product_srv": {
+          "description": "Retrieve a list of entities from the A_ProductBasicText collection.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "$top": {
+                "type": "string",
+                "description": "Maximum number of records to return"
+              },
+              "$filter": {
+                "type": "string",
+                "description": "OData filter expression"
+              },
+              "$select": {
+                "type": "string",
+                "description": "Comma-separated list of fields to return"
+              }
+            },
+            "required": []
+          },
+          "mock_response": {
+            "d": {
+              "results": [
+                {
+                  "Product": "LAPTOP-001",
+                  "Language": "EN",
+                  "LongText": "Premium business laptop designed for professional use. Features a high-resolution display, fast SSD storage, and long battery life suitable for all-day work."
+                },
+                {
+                  "Product": "MONITOR-002",
+                  "Language": "EN",
+                  "LongText": "Professional 4K monitor with wide color gamut for design and content creation work. Includes multiple connectivity options including HDMI, DisplayPort, and USB-C."
+                }
+              ]
+            }
+          }
+        },
+        "get_a_productbasictext_for_api_product_srv": {
+          "description": "Retrieve a single entity by its key from the A_ProductBasicText collection.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "Product": {
+                "type": "string",
+                "description": "Product identifier"
+              },
+              "Language": {
+                "type": "string",
+                "description": "Language key (e.g., EN, DE)"
+              },
+              "$select": {
+                "type": "string",
+                "description": "Comma-separated list of fields to return"
+              }
+            },
+            "required": ["Product", "Language"]
+          },
+          "mock_response": {
+            "d": {
+              "Product": "LAPTOP-001",
+              "Language": "EN",
+              "LongText": "Premium business laptop designed for professional use. Features a high-resolution display, fast SSD storage, and long battery life suitable for all-day work."
+            }
+          }
+        },
+        "count_a_productbasictext_for_api_product_srv": {
+          "description": "Get the total count of entities in the A_ProductBasicText collection.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "$filter": {
+                "type": "string",
+                "description": "OData filter expression"
+              }
+            },
+            "required": []
+          },
+          "mock_response": 42
+        }
+      }
+    }
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "created_for_agent": "product-master-data-agent",
+    "mock_mode": true,
+    "deterministic": true,
+    "total_servers": 1,
+    "total_tools": 11,
+    "generated_from": ["translation.json"],
+    "generation_date": "2026-11-10"
+  }
+}
